@@ -1,17 +1,36 @@
+import LRUCache.LRU;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Huawei {
 
     public static void main(String[] args) {
-        System.out.println(Two("2{AB}"));
-        System.out.println(Two("(A)"));
-//        String[] in = new String[]{"","a","123456789","12345678901234"};
-//        String[] out = One(in);
-//        for(String str:out)
-//            System.out.println(str);
+
+            System.out.println(simplifyPath("/../"));
 
 
 
+    }
+
+    public static String simplifyPath(String path) {
+        List<String> list = new LinkedList<>();
+        String[] strs = path.split("/");
+        for(String str:strs){
+            if(!str.equals("") && !str.equals(".")){
+                if(str.equals(".."))
+                    if(list.size()>0)
+                        list.remove(list.size()-1);
+                    else
+                        list.add(str);
+            }
+        }
+
+        StringBuilder res = new StringBuilder();
+        for(String s:list)  {res.append("/");res.append(s);}
+
+        return res.toString();
     }
 
     public static String[] One(String[] in){

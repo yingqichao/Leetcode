@@ -1,5 +1,3 @@
-package niuke;
-
 import java.util.*;
 
 public class connectIslands {

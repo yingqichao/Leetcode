@@ -2,11 +2,56 @@ package Tree;
 import java.util.*;
 public class postorder {
     public static void main(String[] args) {
-        TreeNode tr =  buildTree(new int[]{1,2,4,3,5,7,6},new int[]{4,2,1,5,7,3,6});
-        List<Integer> list = postorderTraversal(tr);
-        for(int i:list)
-            System.out.println(i);
+        TreeNode tr =  buildTree(new int[]{10,5,2,7,15,12,20},new int[]{2,5,7,10,12,15,20});
+        TreeNode newRoot = inplace(tr);
+        while (newRoot!=null){
+            System.out.print(newRoot.val+"<->");
+            newRoot = newRoot.right;
+        }
+
+
+//        List<Integer> list = postorderTraversal(tr);
+//        for(int i:list)
+//            System.out.println(i);
     }
+
+    public static TreeNode inplace(TreeNode root ){
+        //1.leftmost node in the left part becomes the new root
+        //2.rightmost node's next(right) in the left part is root
+        //3.root's right is leftmost node in the right part.
+        TreeNode[] res = helper(root);
+        return res[0];
+
+    }
+
+    public static TreeNode[] helper(TreeNode root){
+        //return:[leftmost node] [rightmost node]
+        TreeNode leftmost = root;TreeNode rightMost = root;
+
+        TreeNode[] left_trs = new TreeNode[0];TreeNode[] right_trs = new TreeNode[0];
+        if(root.left!=null) {
+            left_trs = helper(root.left);
+            leftmost = left_trs[0];
+            TreeNode rightMostInTheLeft = left_trs[1];
+            //conduct 2
+            rightMostInTheLeft.right = root;
+            root.left = rightMostInTheLeft;
+        }
+
+        if(root.right!=null){
+            right_trs = helper(root.right);
+            //conduct 3
+            TreeNode leftMostInTheRight = right_trs[0];
+            root.right = leftMostInTheRight;
+            leftMostInTheRight.left = root;
+            rightMost = right_trs[1];
+        }
+
+
+
+        return new TreeNode[]{leftmost,rightMost};
+    }
+
 
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
         Map<Integer,Integer> map = new HashMap<>();

@@ -15,9 +15,14 @@ public class BigIntegerMultiply {
 //        System.out.println(two(s,t));
 //    }
 //
-//    public static void main(String[] args) {
-//        System.out.println(two("2","3"));
-//    }
+    public static void main(String[] args) {
+        Integer i1 = Integer.valueOf(221);
+        Integer i2 = Integer.valueOf(221);
+        Integer i3 = new Integer(221);
+        System.out.println(i1==i3);
+        System.out.println(i1==i2);
+
+    }
 
     public static String two(String s1,String s2){
 
